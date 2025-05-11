@@ -1,0 +1,42 @@
+1
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s.length()==0){
+            return 0;
+        }
+        int[] num=new int[128];
+        int left=0;
+        int right=0;
+        int sum=0;
+        int ans=0;
+        for(int i=0;i<s.length();i++){
+            num[s.charAt(i)]++;
+            sum++;
+            while(num[s.charAt(i)]>1){
+                num[s.charAt(left++)]--;
+                sum--;
+            }
+            ans=sum>ans?sum:ans;
+        }
+        return ans;
+    }
+}
+2 (效率不如解法1,但更有普适性)
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        Set<Character> hash=new HashSet<>();
+        int len=s.length();
+        int ans=0,right=0;
+        for(int i=0;i<len;i++){
+            if(i!=0){
+                hash.remove(s.charAt(i-1));
+            }
+            while(right<len && !hash.contains(s.charAt(right))){
+                hash.add(s.charAt(right));
+                right++;
+            }
+            ans=Math.max(ans,hash.size());
+        }
+        return ans;
+    }
+}
