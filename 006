@@ -1,0 +1,26 @@
+1
+class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows==1){
+            return s;
+        }
+        StringBuilder ans=new StringBuilder();
+        ArrayList<StringBuilder> a=new ArrayList<>();
+        for(int i=0;i<numRows;i++){
+            a.add(new StringBuilder());
+        }
+        int row=0;
+        int flag=-1;
+        for(int i=0;i<s.length();i++){
+            a.get(row).append(s.charAt(i));
+            if(row==0 || row==numRows-1){
+                flag=-flag;
+            }
+            row+=flag;
+        }
+        for(StringBuilder sb:a){
+            ans.append(sb);
+        }
+        return ans.toString();
+    }
+}
